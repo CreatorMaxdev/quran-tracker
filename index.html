@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quran Memorization Tracker</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background: linear-gradient(to right, #4CAF50, #2E7D32);
+            color: white;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        h1 {
+            margin-top: 20px;
+        }
+
+        .container {
+            width: 80%;
+            max-width: 600px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 30px;
+            background-color: #ddd;
+            border-radius: 15px;
+            overflow: hidden;
+            margin-top: 20px;
+        }
+
+        .progress {
+            width: 0%;
+            height: 100%;
+            background-color: #FFD700;
+            transition: width 0.5s ease-in-out;
+        }
+
+        .progress-text {
+            margin-top: 10px;
+            font-size: 20px;
+        }
+
+        .buttons {
+            margin-top: 20px;
+        }
+
+        button {
+            background-color: #FFD700;
+            color: black;
+            border: none;
+            padding: 10px 20px;
+            margin: 5px;
+            font-size: 18px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background-color: #FFC107;
+        }
+
+        /* Quran Icon */
+        .quran-icon {
+            width: 100px;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Quran Memorization Tracker</h1>
+    <div class="container">
+        <h2 id="memorized-text">Memorized Paras: 8 / 30</h2>
+        <div class="progress-bar">
+            <div class="progress" id="progress"></div>
+        </div>
+        <p class="progress-text" id="progress-percent">26%</p>
+
+        <div class="buttons">
+            <button onclick="addPara()">➕ Add Para</button>
+            <button onclick="minusPara()">➖ Minus Para</button>
+        </div>
+
+        <!-- Quran Icon -->
+        <img src="quran.png" alt="Quran Icon" class="quran-icon">
+    </div>
+
+    <!-- Click Sound -->
+    <audio id="clickSound">
+        <source src="click_sound.wav" type="audio/wav">
+    </audio>
+
+    <script>
+        let memorizedParas = 8;
+        const totalParas = 30;
+        const clickSound = document.getElementById("clickSound");
+
+        function updateProgress() {
+            let percent = Math.round((memorizedParas / totalParas) * 100);
+            document.getElementById("progress").style.width = percent + "%";
+            document.getElementById("progress-percent").innerText = percent + "%";
+            document.getElementById("memorized-text").innerText = `Memorized Paras: ${memorizedParas} / 30`;
+        }
+
+        function addPara() {
+            if (memorizedParas < totalParas) {
+                memorizedParas++;
+                clickSound.play();
+                updateProgress();
+            }
+        }
+
+        function minusPara() {
+            if (memorizedParas > 0) {
+                memorizedParas--;
+                clickSound.play();
+                updateProgress();
+            }
+        }
+
+        // Initialize progress bar on page load
+        updateProgress();
+    </script>
+
+</body>
+</html>
